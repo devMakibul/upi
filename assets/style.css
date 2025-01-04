@@ -355,7 +355,7 @@ body:has(input:focus) #amount-input {
     flex-direction: column;
     align-items: center;
     padding: 25px 25px 15px;
-    background-image: url(/assets/qr-bg.webp);
+    background-image: url(/upi/assets/qr-bg.webp);
     background-size: cover;
     background-repeat: no-repeat;
     gap: 5px;
