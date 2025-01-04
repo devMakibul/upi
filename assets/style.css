@@ -566,5 +566,5 @@ input[type="radio"]:checked + label .menu-icon .icon-outlined {
 input[type="radio"]:checked + .bottom-menu .menu-icon {
     height: 35px;
     width: 35px;
-    background-color: #ddd;
+    background-color: #ddd; 
 }
