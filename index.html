@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://unpkg.com/html5-qrcode"></script>
+        <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" type="text/css" href="/assets/style.css">
+        
+        
+        <!-- 
+    - primary meta tags
+  -->
+  <meta name="title" content="UPI Custom QR Code Generator">
+  <meta content='UPI Custom QR Code Generator' name='description'/>
+  <meta content='website' property='og:type'/>
+  <meta content='https://makibul.com/upi' property='og:url'/>
+  <meta content='UPI Custom QR Code Generator' property='og:title'/>
+  <meta content='Personal class attendance tracking tool' property='og:description'/>
+  <meta content='/assets/meta-banner.jpg' property='og:image'/>
+  <meta content='summary_large_image' property='twitter:card'/>
+  <meta content='@devMakibul' name='twitter:site'/>
+  <meta content='@devMakibul' name='twitter:creator'/>
+  <meta content='https://makibul.com/upi' property='twitter:url'/>
+  <meta content='UPI Custom QR Code Generator' property='twitter:title'/>
+  <meta content='UPI Custom QR Code Generator' property='twitter:description'/>
+  <meta content='/assets/meta-banner.jpg' property='twitter:image'/>
+  <link href='/assets/apple-touch-icon.png' rel='apple-touch-icon' sizes='180x180'/>
+  <link href='/assets/favicon.ico' rel='shortcut icon' sizes='any' type='image/png'/>
+        
+        <title>Customizable UPI QR Code Generator</title>
+    </head>
+    <body>
+        <header>
+            <h2 class="title">UPI QR Generator <span class="creator" onclick="window.open('https://makibul.com', '_blank')">alpha</span></h2>
+        <div class="navbar">
+        <input type="radio" id="menu-generate" name="nav" checked>
+        <label for="menu-generate"  class="bottom-menu" onclick="showDiv('generate')">
+            <div class="menu-icon">
+                <ion-icon class="icon-outlined" name="home-outline"></ion-icon>
+                <ion-icon class="icon-filled" name="home"></ion-icon>
+            </div>
+        </label>
+        
+        <input type="radio" id="menu-customize" name="nav">
+        <label for="menu-customize" class="bottom-menu" onclick="showDiv('customize')">
+            <div class="menu-icon">
+                <ion-icon class="icon-outlined" name="color-palette-outline"></ion-icon>
+                <ion-icon class="icon-filled" name="color-palette"></ion-icon>
+            </div>
+        </label>
+        
+        <input type="radio" id="menu-about" name="nav">
+        <label for="menu-about"  class="bottom-menu" onclick="showDiv('about')">
+            <div class="menu-icon">
+                <ion-icon class="icon-outlined" name="information-circle-outline"></ion-icon>
+                <ion-icon class="icon-filled" name="information-circle"></ion-icon>
+            </div>
+        </label>
+        
+    </div>
+        </header>
+        
+        <section id="generate" class="active">
+        <div class="form-container">
+            <label for="upi-id">👇 Scan <b>YOUR</b> QR or enter UPI to link:</label>
+            <div class="enter-upi-scan">
+                <button id="scan-btn">
+                    <ion-icon name="scan-outline"></ion-icon>
+                </button>
+                <input type="text" id="upi-id" placeholder="enter-your-upi@here" />
+                <button id="done-button">
+                    <ion-icon name="checkmark-outline"></ion-icon>
+                </button>
+            </div>
+            
+            <div id="other-fields">
+                <div id="payee">
+                    <label for="name"><ion-icon name="person-circle-outline"></ion-icon></label>
+                    <input type="text" id="name" placeholder="Enter Payee Name" />
+                </div>
+                
+                <div id="amount-input">
+                    <input type="text" id="amount" placeholder="Enter ₹ to receive" readonly="" />
+                
+                
+                <span id="max-amount-warning">Can't exceed 100000.</span>
+                
+                <!-- Custom Keyboard -->
+                <div class="keyboard" id="keyboard">
+                    <div class="key">1</div>
+                    <div class="key">2</div>
+                    <div class="key">3</div>
+                    <div class="key">4</div>
+                    <div class="key">5</div>
+                    <div class="key">6</div>
+                    <div class="key">7</div>
+                    <div class="key">8</div>
+                    <div class="key">9</div>
+                    <div class="key">.</div>
+                    <div class="key">0</div>
+                    <div class="key delete-key">⌫</div>
+                </div>
+                
+                <button id="generate-qr-btn" onclick="showAmountKeyboard()">
+                    <ion-icon name="qr-code-outline"></ion-icon>
+                    View QR Code
+                </button>
+                
+                </div>
+                
+                <div class="qr-div-wrap" onclick="hideAmountKeyboard()"></div>
+                <div class="qr-div">
+                    
+                    <div id="qr-info">
+                    <div id="upi-id-display"></div>
+                    <div id="qrcode"></div>
+                    <div id="qr-message" style="font-size: 14px; text-align: center;"></div>
+                    <div id="upi-source">UPI QR generated at makibul.com/upi</div>
+                    </div>
+                    <div class="qr-buttons">
+                        <button id="share-qr" class="qr-action-btn light-button">
+                            <ion-icon name="share-social-outline"></ion-icon>
+                            Share QR
+                        </button>
+                        <button id="save-qr" class="qr-action-btn dark-button">
+                        <ion-icon name="download-outline"></ion-icon>
+                        Download QR
+                        </button>
+                    </div>
+                    
+                    
+                    <button id="close-qr" onclick="hideAmountKeyboard()">
+                    <ion-icon name="close-outline"></ion-icon>
+                    Close
+                </button>
+                    
+                
+                </div>
+                
+            </div>
+            
+            
+            <!-- QR Scanner Popup -->
+            <div id="qr-scanner">
+                <div id="my-qr-reader"></div>
+                <button id="close-qr-scanner" class="dark-button">Close</button>
+            </div>
+        </div>
+        
+        </section>
+        
+        <section id="customize">
+        
+        <!-- QR Customization Section (Hidden by Default) -->
+        <div id="customisation-section">
+            <h2>Customize QR</h2>
+            <p>Customize your UPI QR Code. All the selections are saved automatically.</p>
+            
+            
+            
+            <h3 style="margin-top: 20px; margin-bottom: 10px">Corner Box</h3>
+
+
+<div class="customize-style-wrap">
+    <div class="customize-style">
+<label>Style:</label>
+<select id="corner-type">
+    <option value="square">Square</option>
+    <option value="dot">Circle</option>
+    <option value="extra-rounded" selected>Extra Rounded</option>
+</select>
+</div>
+
+<div class="customize-style">
+<label>Color:</label>
+<div class="color-picker-wrapper">
+    <div id="corner-color-preview" class="color-preview" style="background-color: #808080;"></div>
+    <input type="color" id="corner-color" value="#808080" style="display: none;" />
+</div>
+</div>
+</div>
+            
+            
+            <h3 style="margin-top: 20px; margin-bottom: 10px">Tiny Blocks</h3>
+<div class="customize-style-wrap">
+    <div class="customize-style">
+<label>Style:</label>
+<select id="dots-type">
+    <option value="square">Square</option>
+    <option value="dots">Dots</option>
+    <option value="rounded">Rounded</option>
+    <option value="classy">Classy</option>
+    <option value="classy-rounded" selected>Classy Rounded</option>
+    <option value="extra-rounded">Extra Rounded</option>
+</select>
+</div>
+
+<div class="customize-style">
+<!-- Dots Color -->
+<label>Color:</label>
+<div class="color-picker-wrapper">
+    <div id="dots-color-preview" class="color-preview" style="background-color: #4d4d4d;"></div>
+    <input type="color" id="dots-color" value="#4d4d4d" style="display: none;" />
+</div>
+</div>
+</div>
+
+
+
+
+
+            
+            <h3 style="margin-top: 20px; margin-bottom: 10px">Logo</h3>
+            
+            <label>Enter Logo URL or Import one from Gallery</label>
+            <input style="margin-top: 10px" type="text" id="logo-url" placeholder="Enter Logo URL Here" />
+            <button style="display: none;" id="apply-logo-btn" class="light-button"></button>
+            
+            <div class="choose-remove-logo">
+                <button id="remove-logo-btn" class="light-red-button" disabled="">
+      <ion-icon name="trash-outline"></ion-icon>
+      Remove
+  </button>
+                 <label for="logo-file" class="dark-button">
+                <ion-icon name="images-outline"></ion-icon>
+                Import Logo
+            </label>
+            <input style="display: none" type="file" id="logo-file" accept="image/*" />
+  
+            </div>
+           
+
+        </div>
+        
+        </section>
+        
+        <section id="about">
+            
+    <p>
+        This is a simple and customizable tool for generating 
+        <strong>UPI payment QR codes</strong>. It allows users to create QR codes with personalized styles, 
+        colors, and logos. The generated QR codes can be <strong>saved</strong> or <strong>shared</strong> 
+        directly as images for seamless payment processing.
+    </p>
+
+    <!-- How to Use -->
+    <h3 style="margin-top: 20px; margin-bottom: 10px">How to Use the Tool:</h3>
+    <ul style="margin-left: 15px">
+        <li><strong>Enter UPI Details</strong> - Fill in the <strong>UPI ID</strong>, <strong>Payee Name</strong>, <strong>Amount</strong>.</li>
+        <li><strong>Customize QR Code Style</strong> - Choose colors and styles for the QR design, including dots, corners, and logos.</li>
+        <li><strong>Add Logo</strong> - Upload a logo or provide an image URL for branding the QR code.</li>
+        <li><strong>Save or Share QR Code</strong> - Download the QR code image or share it directly with your contacts.</li>
+        <li><strong>Scan and Test</strong> - Scan the generated QR code with any UPI-enabled app to verify its functionality before sharing.</li>
+    </ul>
+
+    <!-- Important Notes -->
+    <h3 style="margin-top: 20px; margin-bottom: 10px">Important Notes:</h3>
+    <ul style="color: red;margin-left: 15px">
+        <li>This tool is <strong>currently in development</strong> and may have limitations or issues.</li>
+        <li><strong>Verify the UPI ID</strong> and <strong>test the generated QR code</strong> thoroughly before sharing it with anyone.</li>
+        <li>Use this tool <strong>with caution</strong> to avoid errors or incorrect payment information.</li>
+        <li>The developer is <strong>not responsible</strong> for any losses caused due to improper usage.</li>
+    </ul>
+
+    <!-- Developer Contact -->
+    <h3 style="margin-top: 20px; margin-bottom: 10px">Contact:</h3>
+    <p>For feedback, suggestions, or support, reach out via the following platforms:</p>
+    <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+        
+        <a href="https://makibul.com/" target="_blank">
+            Portfolio
+        </a>
+        
+        <!-- GitHub -->
+        <a href="https://github.com/devMakibul" target="_blank">
+            GitHub
+        </a>
+
+        <!-- Email -->
+        <a href="mailto: contactmakibul@gmail.com">
+            Email
+        </a>
+
+        <!-- Telegram -->
+        <a href="https://t.me/mak1bul" target="_blank">
+            Telegram
+        </a>
+    </div>
+
+
+        </section>
+        
+        
+        
+    
+        
+        <!-- QR-code-styling library -->
+        <script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/qr-code-styling.min.js"></script>
+        <script src="/assets/script.js"></script>
+        <script src="/assets/navigation.js"></script>
+    </body>
+</html>
