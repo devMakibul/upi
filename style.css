@@ -336,7 +336,7 @@ h3 {
     }
 
     to {
-        opacity: 0.75;
+        opacity: 1;
         transform: translate(-50%, 0);
     }
 }
