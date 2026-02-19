@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://upi.makibul.com/sitemap.xml
