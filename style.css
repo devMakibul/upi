@@ -323,7 +323,7 @@ h3 {
 
 .hero-hint span {
     font-family: cursive;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
     white-space: nowrap;
     margin-top: 14px;
@@ -336,7 +336,7 @@ h3 {
     }
 
     to {
-        opacity: 0.4;
+        opacity: 0.75;
         transform: translate(-50%, 0);
     }
 }
